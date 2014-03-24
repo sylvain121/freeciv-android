@@ -15,21 +15,23 @@
       package="net.hackcasual.freeciv"
       android:versionCode="1"
       android:versionName="1.0">
+    <uses-sdk android:minSdkVersion="8"
+              android:targetSdkVersion="17" />
     <application android:name="Civ" android:label="@string/app_name" android:debuggable="true" android:icon="@drawable/freeciv">
-        <activity android:label="@string/app_name" android:configChanges="keyboardHidden|orientation" android:name=".views.FreeCiv">
+        <activity android:label="@string/app_name" android:configChanges="keyboardHidden|orientation" android:name=".views.FreeCiv" android:exported="true">
 
         </activity>
 
     <activity android:theme="@android:style/Theme.Light" android:name=".views.CityDialog"></activity>
 
-<activity android:name=".views.ImprovementView"></activity>
-<activity android:name=".views.ResearchView"></activity>
-<activity android:name=".views.PlayerView"></activity>
-<activity android:name=".views.CityProductionView"></activity>
-<activity android:theme="@android:style/Theme.Light" android:name=".views.MainMenu">
+<activity android:name=".views.ImprovementView" android:exported="true"></activity>
+<activity android:name=".views.ResearchView" android:exported="true"></activity>
+<activity android:name=".views.PlayerView" android:exported="true"></activity>
+<activity android:name=".views.CityProductionView" android:exported="true"></activity>
+<activity android:theme="@android:style/Theme.Light" android:name=".views.MainMenu" android:exported="true">
 </activity>
-<activity android:theme="@android:style/Theme.Light" android:name=".views.LoadGame"></activity>
-<activity android:name="StartupSplash" android:theme="@style/civ_splash" android:icon="@drawable/freeciv">
+<activity android:theme="@android:style/Theme.Light" android:name=".views.LoadGame" android:exported="true"></activity>
+<activity android:name="StartupSplash" android:theme="@style/civ_splash" android:icon="@drawable/freeciv" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -37,6 +39,5 @@
 
 </activity>
 </application>
-<uses-sdk android:minSdkVersion="3" />
 <uses-permission android:name="android.permission.INTERNET"></uses-permission>
 </manifest> 

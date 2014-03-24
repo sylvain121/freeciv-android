@@ -13,6 +13,8 @@
 
 package net.hackcasual.freeciv;
 
+import android.util.Log;
+import net.hackcasual.freeciv.views.FreeCiv;
 import net.hackcasual.freeciv.views.MainMenu;
 
 import android.app.Activity;
@@ -26,7 +28,9 @@ public class StartupSplash extends Activity {
     @Override
     protected void onCreate(Bundle state){
        super.onCreate(state);
+       Log.d("StartupSlash", "start freeciv");
        this.startActivity(new Intent(this, MainMenu.class));
        this.finish();
+
     }
 }

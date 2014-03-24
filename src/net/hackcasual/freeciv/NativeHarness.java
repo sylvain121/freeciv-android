@@ -63,8 +63,11 @@ public class NativeHarness {
 	}
 	
 	private NativeHarness() {
+        Log.d("NativeHarness.java", "loading server library");
 		System.loadLibrary("server");
+        Log.d("NativeHarness.java", "loading client library");
 		System.loadLibrary("client");
+        Log.d("NativeHarness.java", "all library loaded");
 		serverRunning = false;
 		clientRunning = false;
 		this.mainActivity = null;

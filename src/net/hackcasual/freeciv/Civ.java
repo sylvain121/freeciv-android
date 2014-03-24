@@ -58,8 +58,11 @@ public class Civ extends Application implements NativeEventListener {
 		nativeHarness = NativeHarness.getHarness();
 		
 		// Start the client and server threads
-		nativeHarness.runServer();
-		nativeHarness.runClient();
+        Log.d("Civ.java", "starting native server");
+		//nativeHarness.runServer();
+        Log.d("Civ.java", "starting native client");
+		//nativeHarness.runClient();
+        Log.d("Civ.java", "All start ok");
 		nativeHarness.hookNativeEventListener(this);
 	}
 	

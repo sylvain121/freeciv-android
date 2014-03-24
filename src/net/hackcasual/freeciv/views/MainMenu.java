@@ -16,6 +16,7 @@ package net.hackcasual.freeciv.views;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.util.Log;
 import net.hackcasual.freeciv.R;
 import android.app.Activity;
 import android.content.Intent;
@@ -71,8 +72,11 @@ public class MainMenu extends NativeAwareActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("MainMenu.java", " start freeciv");
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        Log.d("MainMenu.java", " start displaying menu");
     	setContentView(R.layout.mainmenu);
+        Log.d("MainMenu.java", " display main menu");
     	
     	/*Thread t = new Thread() {
     		@Override
