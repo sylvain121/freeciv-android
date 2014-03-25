@@ -24,7 +24,7 @@
 			android:layout_height="fill_parent" android:layout_marginRight="10sp"
 			android:background="@drawable/grey_rounded"
 			android:id="@+id/new_game_button" android:onClick="newGameListener">
-			<ImageView android:src="@drawable/new_game"
+			<ImageView android:src="@drawable/diplo_ok"
 				android:layout_width="fill_parent" android:layout_height="fill_parent"
 				android:scaleType="center" android:layout_weight="1"
 				android:background="@android:color/transparent"></ImageView>

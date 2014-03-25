@@ -85,11 +85,9 @@ public class FreeCiv extends NativeAwareActivity {
         Log.d("Freeciv.java", "start freeciv");
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        
-    	setContentView(R.layout.main);
+        setContentView(R.layout.main);
     	
         nh = ((Civ)(this.getApplication())).getNativeHarness();
-
         nh.getDialogManager().bindActivity(this);
         nh.setMainActivity(this);
       
@@ -98,11 +96,18 @@ public class FreeCiv extends NativeAwareActivity {
         int height = display.getHeight();
         
         NativeHarness.init(width, height);
-        
         mapView = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
-        
-        ((ImageView)findViewById(R.id.map_view)).setImageBitmap(mapView);       
-        
+        ((ImageView)findViewById(R.id.map_view)).setImageBitmap(mapView);
+
+
+        ImageView scienceView = (ImageView)findViewById(R.id.science_view);
+        scienceView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("Freeciv.java", "showResearchActivity called");
+                showResearchActivity();
+            }
+        });
 		//Intent startServer = new Intent(this, CivService.class);
 		
 		//ComponentName cn = startService(startServer);
@@ -169,13 +174,14 @@ public class FreeCiv extends NativeAwareActivity {
     
 	@Override
 	public boolean dispatchTouchEvent(MotionEvent event) {
-		Log.d("FreeCiv", event.toString());
+		Log.d("FreeCiv.java", "new touch event : "+event.toString());
 		
 		touchQueue.add(event);
 		return false;
 	}
 	
 	public void showUnitMenu() {
+        Log.d("FreeCiv.java", "try to open unit menu");
 		unitMenu = true;
 		openOptionsMenu();
 		unitMenu = false;
@@ -337,6 +343,7 @@ public class FreeCiv extends NativeAwareActivity {
 	public boolean onPrepareOptionsMenu (Menu menu) {
 		menu.clear();
 		currentOptions = nh.getAvailableCommandsForUnit();
+        Log.d("FreeCiv.java", "get unit option : "+currentOptions);
 		if (unitMenu) {
 						
 			int count = 0;
