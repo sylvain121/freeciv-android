@@ -25,9 +25,7 @@ import net.hackcasual.freeciv.models.AdvanceExpense;
 import net.hackcasual.freeciv.models.Government;
 import net.hackcasual.freeciv.models.Improvement;
 import net.hackcasual.freeciv.models.UnitType;
-import net.hackcasual.freeciv.views.NativeAwareActivity;
-
-import net.hackcasual.freeciv.R;
+import net.hackcasual.freeciv.views.NativeAwareFragment;
 
 import android.app.Application;
 import android.util.Log;
@@ -239,9 +237,9 @@ public class Civ extends Application implements NativeEventListener {
 	}
 
 	public void unhookNativeEventListener(
-			NativeAwareActivity nativeAwareActivity) {
+			NativeAwareFragment nativeAwareFragment) {
 		// Don't let an Out-of-order situation trash the listener
-		if (this.nativeListener == nativeAwareActivity)
+		if (this.nativeListener == nativeAwareFragment)
 			this.nativeListener = null;
 	}	
 }

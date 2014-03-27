@@ -26,13 +26,10 @@ import net.hackcasual.freeciv.NativeHarness;
 import net.hackcasual.freeciv.NativeHarness.AvailableCommand;
 
 import net.hackcasual.freeciv.R;
-import net.hackcasual.freeciv.R.id;
 import net.hackcasual.freeciv.R.layout;
-import net.hackcasual.freeciv.models.*;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -40,32 +37,27 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ScaleDrawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.SubMenu;
-import android.view.TouchDelegate;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class FreeCiv extends NativeAwareActivity {
+public class FreeCiv extends NativeAwareFragment {
 	NativeHarness nh;
 	List<AvailableCommand> currentOptions;
 	DialogManager dm;
@@ -82,10 +74,7 @@ public class FreeCiv extends NativeAwareActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("Freeciv.java", "start freeciv");
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.main);
+        Log.d("Freeciv.java", "start mapview fragments");
     	
         nh = ((Civ)(this.getApplication())).getNativeHarness();
         nh.getDialogManager().bindActivity(this);
@@ -99,15 +88,6 @@ public class FreeCiv extends NativeAwareActivity {
         mapView = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
         ((ImageView)findViewById(R.id.map_view)).setImageBitmap(mapView);
 
-
-        ImageView scienceView = (ImageView)findViewById(R.id.science_view);
-        scienceView.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("Freeciv.java", "showResearchActivity called");
-                showResearchActivity();
-            }
-        });
 		//Intent startServer = new Intent(this, CivService.class);
 		
 		//ComponentName cn = startService(startServer);
@@ -240,30 +220,30 @@ public class FreeCiv extends NativeAwareActivity {
 	}
 
 	public void updateMapview(final ByteBuffer image, final Semaphore renderLock) {
-		
+
 		/*if (this.isPaused) {
 			renderLock.release();
 			return;
 		}*/
-		
+
 		Log.i("FreeCiv", String.format("Updating mapview on thread: %d", Thread.currentThread().getId()));
-		
+
 		this.runOnUiThread(new Runnable() {
 
 			@Override
 			public void run() {
 				Log.i("FreeCiv", String.format("In UI thread %d", Thread.currentThread().getId()));
-				
+
 				image.rewind();
 				mapView.copyPixelsFromBuffer(image);
 				((ImageView)findViewById(R.id.map_view)).setImageBitmap(mapView);
 				//renderLock.release();
 				Log.i("FreeCiv", "gui thread released lock");
 			}
-		
+
 		});
 	}
-	
+
 	void runExercise(final Activity that) {
 		Thread t = new Thread() {
 
@@ -393,7 +373,7 @@ public class FreeCiv extends NativeAwareActivity {
 		
 		switch (item.getItemId()) {
 		case 101: showUnitMenu(); break;
-		case 102: showResearchActivity(); break;
+		//case 102: showResearchActivity(); break;
 		case 103: showPlayerInfo(); break;
 		case 104: NativeHarness.save(); break;
 		default: nh.sendCommand(item.getItemId()); break;
@@ -404,11 +384,12 @@ public class FreeCiv extends NativeAwareActivity {
 		return true;
 	}
 	
-	void showResearchActivity() {
+/*	public void showResearchActivity() {
+        Log.d("FreeCiv.java", "showResearchActivity called");
 		Intent researchViewer = new Intent(this, ResearchView.class);
 		
 		startActivity(researchViewer);
-	}
+	}*/
 	
 	void showPlayerInfo() {
 		Intent playerViewer = new Intent(this, PlayerView.class);

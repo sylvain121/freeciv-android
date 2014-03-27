@@ -13,20 +13,12 @@
 
 package net.hackcasual.freeciv;
 
-import java.nio.ByteBuffer;
-import java.util.HashMap;
-import java.util.Map;
-
-import net.hackcasual.freeciv.models.CityView;
-import net.hackcasual.freeciv.views.CityDialog;
-
-import net.hackcasual.freeciv.R;
+import net.hackcasual.freeciv.activity.CityDialog;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.text.Editable;
 import android.util.Log;
 import android.widget.EditText;

@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import net.hackcasual.freeciv.activity.MainGameActivity;
 
 class TilesetProgress {
 	public final String name;
@@ -36,7 +37,7 @@ class TilesetProgress {
 }
 
 
-public class MainMenu extends NativeAwareActivity {
+public class MainMenu extends NativeAwareFragment {
 	private static final int LOAD_GAME = 1;
 
 	
@@ -134,7 +135,7 @@ public class MainMenu extends NativeAwareActivity {
 	}
 	
 	public void newGameListener(View v) {
-		Intent freeCiv = new Intent(this, FreeCiv.class);
+		Intent freeCiv = new Intent(this, MainGameActivity.class);
 		startActivity(freeCiv);
 		finish();
 	}

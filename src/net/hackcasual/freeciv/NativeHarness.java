@@ -22,6 +22,8 @@ import java.util.Map;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
+import android.app.Fragment;
+import net.hackcasual.freeciv.fragments.MapViewFragment;
 import net.hackcasual.freeciv.models.Advance;
 import net.hackcasual.freeciv.models.AdvanceExpense;
 import net.hackcasual.freeciv.models.City;
@@ -49,7 +51,7 @@ import android.widget.ImageView;
 
 public class NativeHarness {
 	private DialogManager dm;
-	private FreeCiv mainActivity;
+	private MapViewFragment mainFragment;
 	private final static NativeHarness nh = new NativeHarness();
 	private Semaphore displayLock = new Semaphore(1);
 	private String lastTilesetProgress = null;
@@ -70,12 +72,12 @@ public class NativeHarness {
         Log.d("NativeHarness.java", "all library loaded");
 		serverRunning = false;
 		clientRunning = false;
-		this.mainActivity = null;
+		this.mainFragment = null;
 		this.dm = new DialogManager(this);
 	}
 	
-	public void setMainActivity(FreeCiv act) {
-		this.mainActivity = act;
+	public void setMainFragment(MapViewFragment act) {
+		this.mainFragment = act;
 	}
 	
 	public DialogManager getDialogManager() {
@@ -217,8 +219,8 @@ public class NativeHarness {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if (mainActivity != null) {
-			mainActivity.updateMapview(nativeBuffer, displayLock);			
+		if (mainFragment != null) {
+			mainFragment.updateMapview(nativeBuffer, displayLock);
 		} else {
 			Log.i("FreeCiv", "Premature release");
 			displayLock.release();
