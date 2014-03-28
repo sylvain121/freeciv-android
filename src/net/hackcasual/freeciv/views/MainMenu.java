@@ -13,61 +13,25 @@
 
 package net.hackcasual.freeciv.views;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 import net.hackcasual.freeciv.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import net.hackcasual.freeciv.activity.MainGameActivity;
-
-class TilesetProgress {
-	public final String name;
-	public final int progressVal;
-	public TilesetProgress(String n, int v) {
-		name = n;
-		progressVal = v;
-	}
-}
+import net.hackcasual.freeciv.game.MainGameActivity;
 
 
-public class MainMenu extends NativeAwareFragment {
+
+
+public class MainMenu extends Activity {
 	private static final int LOAD_GAME = 1;
 
 	
-	private static final Map<String, TilesetProgress> progressMap = new HashMap<String, TilesetProgress>();
-	
-	static {
-		progressMap.put("loading_indicators", new TilesetProgress("Indicators", 4));
-		progressMap.put("loading_mask", new TilesetProgress("Masks", 8));
-		progressMap.put("loading_spaceship", new TilesetProgress("Spaceship", 12));		
-		progressMap.put("loading_cursors", new TilesetProgress("Cursors", 17));
-		progressMap.put("loading_roads", new TilesetProgress("Roads", 21));
-		progressMap.put("loading_unitinfo", new TilesetProgress("Units", 25));
-		progressMap.put("loading_cities", new TilesetProgress("Cities", 30));
-		progressMap.put("loading_overlays", new TilesetProgress("Overlays", 34));
-		progressMap.put("loading_farmland", new TilesetProgress("Farmland", 38));		
-		progressMap.put("loading_fog", new TilesetProgress("Fog", 43));
-		progressMap.put("Lake", new TilesetProgress("Lakes", 47));
-		progressMap.put("Ocean", new TilesetProgress("Oceans", 51));
-		progressMap.put("Deep Ocean", new TilesetProgress("Deep Oceans", 56));
-		progressMap.put("Glacier", new TilesetProgress("Glaciers", 60));
-		progressMap.put("Desert", new TilesetProgress("Deserts", 64));		
-		progressMap.put("Forest", new TilesetProgress("Forests", 69));
-		progressMap.put("Grassland", new TilesetProgress("Grasslands", 73));
-		progressMap.put("Hills", new TilesetProgress("Hills", 77));
-		progressMap.put("Jungle", new TilesetProgress("Jungles", 82));
-		progressMap.put("Mountains", new TilesetProgress("Mountains", 86));
-		progressMap.put("Plains", new TilesetProgress("Plains", 90));		
-		progressMap.put("Swamp", new TilesetProgress("Swamps", 95));
-		progressMap.put("Tundra", new TilesetProgress("Tundra", 100));						
-	}
+
 	
 	/** Called when the activity is first created. */
     @Override
@@ -111,28 +75,7 @@ public class MainMenu extends NativeAwareFragment {
     	
     }
 
-	@Override
-	public void receiveTilesetUpdate(String info) {
 
-
-		if (progressMap.containsKey(info)) {
-			final TilesetProgress tp = progressMap.get(info);
-			final ProgressBar progressBar = (ProgressBar)this.findViewById(R.id.current_progress_bar);
-			final TextView progressItem = (TextView)this.findViewById(R.id.current_progress_item);
-			this.runOnUiThread(new Runnable() {
-
-				@Override
-				public void run() {
-					if (progressBar.getProgress() <= tp.progressVal) {
-						progressBar.setProgress(tp.progressVal);						
-						progressItem.setText(tp.name);
-					}
-				}
-				
-			});
-		}
-		
-	}
 	
 	public void newGameListener(View v) {
 		Intent freeCiv = new Intent(this, MainGameActivity.class);
@@ -145,13 +88,27 @@ public class MainMenu extends NativeAwareFragment {
 		//startActivity(freeCiv);
 		this.startActivityForResult(loadGame, LOAD_GAME);
 	}
+
+    public void multiplayerListener(View v){
+        Context context = getApplicationContext();
+        CharSequence text = "Coming soon";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+    }
+
+    public void exitListener(View v){
+        finish();
+    }
 	
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (LOAD_GAME == requestCode && Activity.RESULT_OK == resultCode) {
-			Intent freeCiv = new Intent(this, FreeCiv.class);
-			freeCiv.putExtra(LoadGame.SAVED_GAME_TAG, data.getStringExtra(LoadGame.SAVED_GAME_TAG));
-			startActivity(freeCiv);
+			//Intent freeCiv = new Intent(this, FreeCiv.class);
+            Log.d("MainMenu.java", "onActivityResult");
+			//freeCiv.putExtra(LoadGame.SAVED_GAME_TAG, data.getStringExtra(LoadGame.SAVED_GAME_TAG));
+			//startActivity(freeCiv);
 			finish();			
 		}
 	}

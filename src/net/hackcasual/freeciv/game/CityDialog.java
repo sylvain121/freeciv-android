@@ -11,7 +11,7 @@
    GNU General Public License for more details.
 ***********************************************************************/
 
-package net.hackcasual.freeciv.activity;
+package net.hackcasual.freeciv.game;
 
 import java.util.List;
 

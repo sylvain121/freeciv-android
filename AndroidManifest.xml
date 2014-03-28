@@ -22,10 +22,10 @@
 
         </activity>
 
-    <activity android:theme="@android:style/Theme.Light" android:name=".activity.CityDialog"></activity>
+    <activity android:theme="@android:style/Theme.Light" android:name=".game.CityDialog"></activity>
 
 <activity android:name=".views.ImprovementView" android:exported="true"></activity>
-<activity android:name=".activity.MainGameActivity" android:exported="true"></activity>
+<activity android:name=".game.MainGameActivity" android:exported="true"></activity>
 <activity android:name=".views.ResearchView" android:exported="true"></activity>
 <activity android:name=".views.PlayerView" android:exported="true"></activity>
 <activity android:name=".views.CityProductionView" android:exported="true"></activity>

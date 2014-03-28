@@ -1,15 +1,4 @@
-/********************************************************************** 
- Android-Freeciv - Copyright (C) 2010 - C Vaughn
-   This program is free software; you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 2, or (at your option)
-   any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-***********************************************************************/
+/*
 
 package net.hackcasual.freeciv.views;
 
@@ -70,7 +59,7 @@ public class FreeCiv extends NativeAwareFragment {
 	
 	final BlockingQueue<MotionEvent> touchQueue = new LinkedBlockingQueue<MotionEvent>();
 	
-	/** Called when the activity is first created. */
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -224,7 +213,7 @@ public class FreeCiv extends NativeAwareFragment {
 		/*if (this.isPaused) {
 			renderLock.release();
 			return;
-		}*/
+		}
 
 		Log.i("FreeCiv", String.format("Updating mapview on thread: %d", Thread.currentThread().getId()));
 
@@ -389,7 +378,7 @@ public class FreeCiv extends NativeAwareFragment {
 		Intent researchViewer = new Intent(this, ResearchView.class);
 		
 		startActivity(researchViewer);
-	}*/
+	}
 	
 	void showPlayerInfo() {
 		Intent playerViewer = new Intent(this, PlayerView.class);
@@ -517,4 +506,4 @@ public class FreeCiv extends NativeAwareFragment {
     	
         return false;  // don't go ahead and show the search box
     }
-}
+}*/

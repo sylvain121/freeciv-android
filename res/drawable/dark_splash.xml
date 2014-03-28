@@ -12,6 +12,6 @@
    GNU General Public License for more details.
  -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-	<item android:drawable="@drawable/freeciv" />
+	<item android:drawable="@drawable/intro" />
 	<item android:drawable="@drawable/dark_shadow" />
 </layer-list>

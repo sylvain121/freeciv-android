@@ -1,4 +1,4 @@
-package net.hackcasual.freeciv.adapter;
+package net.hackcasual.freeciv.game.adapter;
 
 import android.app.Activity;
 import android.content.Context;

@@ -17,15 +17,11 @@ import net.hackcasual.freeciv.Civ;
 import net.hackcasual.freeciv.NativeHarness;
 
 import net.hackcasual.freeciv.R;
-import net.hackcasual.freeciv.R.id;
-import net.hackcasual.freeciv.R.layout;
-import net.hackcasual.freeciv.models.Advance;
 import net.hackcasual.freeciv.models.Improvement;
 import net.hackcasual.freeciv.models.UnitType;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -37,7 +33,7 @@ public class CityProductionView extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        setContentView(R.layout.imprlist);
+        setContentView(R.layout.researchlist);
         
         final int cityId = this.getIntent().getIntExtra("cityId", -1);
         

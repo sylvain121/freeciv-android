@@ -32,7 +32,7 @@ import net.hackcasual.freeciv.models.Improvement;
 import net.hackcasual.freeciv.models.Player;
 import net.hackcasual.freeciv.models.Unit;
 import net.hackcasual.freeciv.models.UnitType;
-import net.hackcasual.freeciv.views.FreeCiv;
+//import net.hackcasual.freeciv.views.FreeCiv;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;

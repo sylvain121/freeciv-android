@@ -22,7 +22,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 public abstract class NativeAwareFragment extends Fragment implements NativeEventListener {
-	boolean isConnected = false;
+	public boolean isConnected = false;
 	
 	public void setConnectionStatus(boolean isConnected) {
 		this.isConnected = isConnected;

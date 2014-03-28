@@ -41,6 +41,7 @@
     <string-array name="nav_drawer_items">
         <item >map</item>
         <item>research</item>
+        <item>messages</item>
     </string-array>
 
     <!-- Nav Drawer List Item Icons -->
@@ -48,6 +49,7 @@
     <array name="nav_drawer_icons">
         <item>@drawable/freeciv</item>
         <item>@drawable/science</item>
+        <item>@drawable/ic_message</item>
     </array>
 
     <!-- Content Description -->

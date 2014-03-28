@@ -14,7 +14,7 @@
 package net.hackcasual.freeciv;
 
 import android.util.Log;
-import net.hackcasual.freeciv.views.FreeCiv;
+//import net.hackcasual.freeciv.views.FreeCiv;
 import net.hackcasual.freeciv.views.MainMenu;
 
 import android.app.Activity;

@@ -27,11 +27,8 @@ import net.hackcasual.freeciv.models.Advance;
 import net.hackcasual.freeciv.models.AdvanceExpense;
 import net.hackcasual.freeciv.models.Improvement;
 import net.hackcasual.freeciv.models.UnitType;
-import net.hackcasual.freeciv.widgets.CheckableLayout;
 
 import net.hackcasual.freeciv.R;
-import net.hackcasual.freeciv.R.id;
-import net.hackcasual.freeciv.R.layout;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -50,7 +47,7 @@ public class ResearchView extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        setContentView(R.layout.imprlist);
+        setContentView(R.layout.researchlist);
         
         LinearLayout mainNode = (LinearLayout)findViewById(R.id.impr_list);
 

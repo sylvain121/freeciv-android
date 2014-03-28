@@ -1,4 +1,4 @@
-package net.hackcasual.freeciv.activity;
+package net.hackcasual.freeciv.game;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -11,21 +11,24 @@ import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import net.hackcasual.freeciv.fragments.MapViewFragment;
 import net.hackcasual.freeciv.R;
+import net.hackcasual.freeciv.fragments.ResearchFragment;
 import net.hackcasual.freeciv.models.NavDrawerItem;
-import net.hackcasual.freeciv.adapter.NavDrawerListAdapter;
-import net.hackcasual.freeciv.fragments.researchFragment;
+import net.hackcasual.freeciv.game.adapter.NavDrawerListAdapter;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 public class MainGameActivity extends Activity {
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
+    private Fragment currentFragment;
 
 	// nav drawer title
 	private CharSequence mDrawerTitle;
@@ -39,8 +42,13 @@ public class MainGameActivity extends Activity {
 
 	private ArrayList<NavDrawerItem> navDrawerItems;
 	private NavDrawerListAdapter adapter;
+    private Vector<Fragment> fragmentsManager = new Vector<Fragment>();
+    private float zoomStartX = 0 ;
+    private float zoomStartY = 0;
+    private boolean zoomStart = false;
 
-	@Override
+
+    @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.freecivparty);
@@ -51,8 +59,7 @@ public class MainGameActivity extends Activity {
 		navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
 
 		// nav drawer icons from resources
-		navMenuIcons = getResources()
-				.obtainTypedArray(R.array.nav_drawer_icons);
+		navMenuIcons = getResources().obtainTypedArray(R.array.nav_drawer_icons);
 
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
@@ -62,8 +69,12 @@ public class MainGameActivity extends Activity {
 		// adding nav drawer items to array
 		// Home
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, 0)));
+        fragmentsManager.addElement(new MapViewFragment());
         // science research
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, 0), true, "22"));
+        fragmentsManager.addElement(new ResearchFragment());
+        //message
+
 		
 
 		// Recycle the typed array
@@ -100,6 +111,8 @@ public class MainGameActivity extends Activity {
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
 
 		if (savedInstanceState == null) {
+            //load game data with loaderFragment
+
 			// on first time display view for first nav item
 			displayView(0);
 		}
@@ -156,17 +169,8 @@ public class MainGameActivity extends Activity {
 	private void displayView(int position) {
 		// update the main content by replacing fragments
 		Fragment fragment = null;
-		switch (position) {
-		case 0:
-			fragment = new MapViewFragment();
-			break;
-        case 1:
-            fragment = new researchFragment();
-            break;
-
-		default:
-			break;
-		}
+        fragment = fragmentsManager.elementAt(position);
+        currentFragment = fragment;
 
 		if (fragment != null) {
 			FragmentManager fragmentManager = getFragmentManager();
@@ -209,4 +213,34 @@ public class MainGameActivity extends Activity {
 		mDrawerToggle.onConfigurationChanged(newConfig);
 	}
 
+    /**
+     * @method get all touch event for this activity
+     * only use to catch touch event on mapview
+     * @param event
+     * @return
+     */
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        super.dispatchTouchEvent(event);
+//        //TODO Zoom not working
+//        switch(event.getAction()){
+//            case MotionEvent.ACTION_POINTER_1_DOWN:
+//                zoomStartX = event.getX();
+//                zoomStartY = event.getY();
+//                zoomStart = true;
+//                ((MapViewFragment) fragmentsManager.elementAt(0)).setZoomLong(zoomStartX, zoomStartY, event.getX(), event.getY());
+//                break;
+//            case MotionEvent.ACTION_POINTER_1_UP:
+//                zoomStart = false;
+//        }
+//        if(event.getAction() == MotionEvent.ACTION_MOVE && zoomStart){
+//            ((MapViewFragment) fragmentsManager.elementAt(0)).doZoom(zoomStartX, zoomStartY, event.getX(), event.getY());
+//        }
+
+        if(currentFragment == fragmentsManager.elementAt(0)){
+            //Log.d("MainActivity.java", "new touch event : "+event.toString());
+            ((MapViewFragment) fragmentsManager.elementAt(0)).setTouchQueue(event);
+        }
+        return false;
+    }
 }

@@ -13,7 +13,7 @@
 
 package net.hackcasual.freeciv;
 
-import net.hackcasual.freeciv.activity.CityDialog;
+import net.hackcasual.freeciv.game.CityDialog;
 
 import android.app.Activity;
 import android.app.AlertDialog;

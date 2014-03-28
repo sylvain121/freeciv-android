@@ -7,16 +7,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import net.hackcasual.freeciv.R;
 
-public class researchFragment extends Fragment {
+public class ResearchFragment extends Fragment {
 
-	public researchFragment(){}
+
+    public ResearchFragment(){}
 	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
  
-        View rootView = inflater.inflate(R.layout.imprlist, container, false);
-         
+        View rootView = inflater.inflate(R.layout.researchlist, container, false);
+
+
         return rootView;
     }
+
+
 }

@@ -1,5 +1,6 @@
 package net.hackcasual.freeciv.fragments;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
@@ -11,11 +12,12 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.util.FloatMath;
 import android.util.Log;
 import android.view.*;
 import android.widget.*;
 import net.hackcasual.freeciv.*;
-import net.hackcasual.freeciv.views.FreeCiv;
+//import net.hackcasual.freeciv.views.FreeCiv;
 import net.hackcasual.freeciv.views.LoadGame;
 import net.hackcasual.freeciv.views.NativeAwareFragment;
 import net.hackcasual.freeciv.views.PlayerView;
@@ -39,7 +41,16 @@ public class MapViewFragment extends NativeAwareFragment {
     boolean isPaused;
 
     final BlockingQueue<MotionEvent> touchQueue = new LinkedBlockingQueue<MotionEvent>();
-	public MapViewFragment(){}
+    private float oldZoomLong = 0;
+    private int screenWidth;
+    private int screenHeight;
+    private int activityWidth;
+    private int activityHeight;
+    private int screenWidthOffset;
+    private int screenHeightOffset;
+
+
+    public MapViewFragment(){}
 	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,18 +58,16 @@ public class MapViewFragment extends NativeAwareFragment {
  
         View rootView = inflater.inflate(R.layout.mapview, container, false);
         Log.d("Freeciv.java", "start mapview fragment");
-
         nh = ((Civ)(this.getActivity().getApplication())).getNativeHarness();
         nh.getDialogManager().bindActivity(this.getActivity());
         nh.setMainFragment(this);
-
         Display display = getActivity().getWindowManager().getDefaultDisplay();
-        int width = display.getWidth();
-        int height = display.getHeight();
+        activityWidth = display.getWidth();
+        activityHeight = display.getHeight();
 
-        NativeHarness.init(width, height);
-        mapView = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
-        ((ImageView)getActivity().findViewById(R.id.map_view)).setImageBitmap(mapView);
+
+
+        //((ImageView)getActivity().findViewById(R.id.map_view)).setImageBitmap(mapView); view not init at this time
 
         //Intent startServer = new Intent(this, CivService.class);
 
@@ -84,7 +93,7 @@ public class MapViewFragment extends NativeAwareFragment {
                     } catch (InterruptedException e) {
                         //Nothing
                     }
-                    int unitCount = NativeHarness.touchEvent((int)toProcess.getX(), (int)toProcess.getY(), toProcess.getAction());
+                    int unitCount = NativeHarness.touchEvent((int)toProcess.getX() - screenWidthOffset, (int)toProcess.getY() - screenHeightOffset, toProcess.getAction());
                     if (unitCount > 0) {
                         if (unitCount == 1) {
                             me.getActivity().runOnUiThread(new Runnable() {
@@ -110,6 +119,29 @@ public class MapViewFragment extends NativeAwareFragment {
         }).start();
         return rootView;
     }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Log.d("MapViewFragment","onActivityCreated");
+        final ImageView image = (ImageView) getActivity().findViewById(R.id.map_view);
+        ViewTreeObserver vto = image.getViewTreeObserver();
+        vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            public boolean onPreDraw() {
+                screenHeight = image.getMeasuredHeight();
+                screenWidth = image.getMeasuredWidth();
+                screenWidthOffset = activityWidth - screenWidth;
+                screenHeightOffset = activityHeight - screenHeight;
+                NativeHarness.init(screenWidth, screenHeight);
+                mapView = Bitmap.createBitmap(screenWidth, screenHeight, Bitmap.Config.RGB_565);
+                image.getViewTreeObserver().removeOnPreDrawListener(this);
+                return true;
+            }
+        });
+
+
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -124,10 +156,8 @@ public class MapViewFragment extends NativeAwareFragment {
         this.isPaused = true;
     }
 
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent event) {
+    public boolean setTouchQueue(MotionEvent event) {
         Log.d("FreeCiv.java", "new touch event : "+event.toString());
-
         touchQueue.add(event);
         return false;
     }
@@ -193,11 +223,6 @@ public class MapViewFragment extends NativeAwareFragment {
 
     public void updateMapview(final ByteBuffer image, final Semaphore renderLock) {
 
-		/*if (this.isPaused) {
-			renderLock.release();
-			return;
-		}*/
-
         Log.i("FreeCiv", String.format("Updating mapview on thread: %d", Thread.currentThread().getId()));
 
         this.getActivity().runOnUiThread(new Runnable() {
@@ -224,7 +249,6 @@ public class MapViewFragment extends NativeAwareFragment {
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
 
@@ -292,7 +316,7 @@ public class MapViewFragment extends NativeAwareFragment {
         });
     }
 
-    public boolean onPrepareOptionsMenu (Menu menu) {
+    /*public boolean onPrepareOptionsMenu (Menu menu) {
         menu.clear();
         currentOptions = nh.getAvailableCommandsForUnit();
         Log.d("FreeCiv.java", "get unit option : "+currentOptions);
@@ -338,7 +362,7 @@ public class MapViewFragment extends NativeAwareFragment {
             menu.add(0, 105, 0, "Cancel");
         }
         return true;
-    }
+    }*/
 
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -346,7 +370,7 @@ public class MapViewFragment extends NativeAwareFragment {
         switch (item.getItemId()) {
             case 101: showUnitMenu(); break;
             //case 102: showResearchActivity(); break;
-            case 103: showPlayerInfo(); break;
+            //case 103: showPlayerInfo(); break;
             case 104: NativeHarness.save(); break;
             default: nh.sendCommand(item.getItemId()); break;
         }
@@ -363,15 +387,15 @@ public class MapViewFragment extends NativeAwareFragment {
 		startActivity(researchViewer);
 	}*/
 
-    void showPlayerInfo() {
+    /*void showPlayerInfo() {
         Intent playerViewer = new Intent(this, PlayerView.class);
 
         startActivity(playerViewer);
-    }
+    }*/
 
     @Override
     public void receiveTilesetUpdate(String info) {
-        // TODO Auto-generated method stub
+        // implement interface requirement
 
     }
 
@@ -394,11 +418,11 @@ public class MapViewFragment extends NativeAwareFragment {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-
+        Log.d("MapViewFragment", "onConfigurationChanged");
         if (overviewDialog != null && overviewDialog.isShowing())
             overviewDialog.cancel();
 
-        Display display = getWindowManager().getDefaultDisplay();
+        Display display = getActivity().getWindowManager().getDefaultDisplay();
         int width = display.getWidth();
         int height = display.getHeight();
 
@@ -406,16 +430,16 @@ public class MapViewFragment extends NativeAwareFragment {
 
         mapView = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
 
-        ((ImageView)findViewById(R.id.map_view)).setImageBitmap(mapView);
+        ((ImageView)getActivity().findViewById(R.id.map_view)).setImageBitmap(mapView);
     }
 
-    @Override
+    //@Override
     public boolean onSearchRequested() {
         //((ImageView)findViewById(R.id.map_view)).setImageBitmap(nh.getOverview());
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);// overviewDialog = new AlertDialog(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());// overviewDialog = new AlertDialog(this);
 
-        Display display = getWindowManager().getDefaultDisplay();
+        Display display = getActivity().getWindowManager().getDefaultDisplay();
         int width = display.getWidth();
         int height = display.getHeight();
 
@@ -438,11 +462,11 @@ public class MapViewFragment extends NativeAwareFragment {
         image_width = (int) (theOverview.getWidth() * imageScale);
         image_height = (int) (theOverview.getHeight() * imageScale);
 
-        final ImageView overviewView = new ImageView(this);
+        final ImageView overviewView = new ImageView(this.getActivity());
         overviewView.setScaleType(ImageView.ScaleType.FIT_XY);
         overviewView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT));
 
-        final LinearLayout overviewHolder = new LinearLayout(this);
+        final LinearLayout overviewHolder = new LinearLayout(this.getActivity());
         overviewHolder.setLayoutParams(new ViewGroup.LayoutParams(image_width, image_height));
         overviewHolder.addView(overviewView, image_width, image_height);
 
@@ -490,4 +514,37 @@ public class MapViewFragment extends NativeAwareFragment {
         return false;  // don't go ahead and show the search box
     }
 
+    public void doZoom(float zoomStartX, float zoomStartY, float x, float y) {
+        float zoomLong = getZoomWidth(zoomStartX, zoomStartY, x, y);
+        Log.d("MapViewFragment", "doZoom");
+        float ratio = oldZoomLong /  zoomLong;
+        Log.d("MapViewFragment","oldZoomLong : "+oldZoomLong+" zoomLong : "+zoomLong );
+
+        if(zoomLong < oldZoomLong){
+            Log.d("MapViewFragment", "screenWidth : "+screenWidth+"screenHeight : "+screenHeight+"ratio : "+ratio);
+            int initx = Math.round(screenWidth * ratio);
+            int inity = Math.round(screenHeight * ratio);
+            NativeHarness.init(initx, inity);
+
+        }
+        if(zoomLong > oldZoomLong){
+            Log.d("MapViewFragment", "screenWidth : "+screenWidth+"screenHeight : "+screenHeight+"ratio : "+ratio);
+            int initx = Math.round(screenWidth * ratio);
+            int inity = Math.round(screenHeight * ratio);
+            NativeHarness.init(initx, inity);
+
+        }
+
+    }
+
+    private float getZoomWidth(float zoomStartX, float zoomStartY, float x, float y) {
+        float zoomx = zoomStartX - x;
+        float zoomy = zoomStartY - y;
+        return FloatMath.sqrt(zoomx * zoomx + zoomy * zoomy);
+    }
+
+    public void setZoomLong(float zoomStartX, float zoomStartY, float x, float y) {
+        Log.d("MapViewFragment", "setZoom");
+        oldZoomLong = getZoomWidth(zoomStartX, zoomStartY, x, y);
+    }
 }
