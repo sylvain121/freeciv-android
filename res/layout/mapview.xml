@@ -1,0 +1,11 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+<ImageView android:id="@+id/map_view" android:layout_height="match_parent"
+           android:layout_width="match_parent"></ImageView>
+<TextView android:layout_height="129dp" android:id="@+id/msg_bar"
+          android:layout_width="fill_parent" android:textColor="#fff"
+          android:textSize="18sp" android:shadowColor="#333" android:shadowDx="1"
+          android:shadowDy="1" android:shadowRadius="2" android:background="#6663"></TextView>
+</RelativeLayout>
+
