@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="freeciv">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/res/raw/freeciv.zip!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
