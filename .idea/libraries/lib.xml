@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="lib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/freeciv/app/main/lib/guava-r07.jar!/" />
+      <root url="jar://$PROJECT_DIR$/freeciv/app/main/lib/android-support-v4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/freeciv/app/main/lib/commons-compress-1.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
