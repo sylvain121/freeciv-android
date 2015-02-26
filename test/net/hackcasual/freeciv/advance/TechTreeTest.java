@@ -57,7 +57,7 @@ public class TechTreeTest extends TestCase {
     /**
      * convert advance array to ArrayList
      */
-    public void arrayToArrayListTest() {
+    public void testArrayToArrayList() {
         List<Advance> row0 = new ArrayList<Advance>();
         row0.add(iron);
         row0.add(pottery);
@@ -73,7 +73,7 @@ public class TechTreeTest extends TestCase {
     /**
      * arrange tech by display columns
      */
-    public void columnsGroupTest (){
+    public void testColumnsGroup (){
 
         List<Advance> row0 = new ArrayList<Advance>();
         row0.add(iron);

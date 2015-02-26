@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/freeciv/app/app.iml" filepath="$PROJECT_DIR$/freeciv/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/freeciv/app/main/main.iml" filepath="$PROJECT_DIR$/freeciv/app/main/main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/freeciv-android.iml" filepath="$PROJECT_DIR$/freeciv-android.iml" />
     </modules>
   </component>
 </project>
