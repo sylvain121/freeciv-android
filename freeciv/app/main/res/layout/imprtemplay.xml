@@ -1,3 +1,0 @@
-<LinearLayout android:layout_width="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android" android:layout_height="wrap_content" android:orientation="vertical">
-    <ScrollView android:id="@+id/ScrollView01" android:layout_height="wrap_content" android:layout_width="fill_parent"><LinearLayout android:layout_height="wrap_content" android:id="@+id/impr_list" android:orientation="vertical" android:layout_width="fill_parent"></LinearLayout></ScrollView>
-</LinearLayout>
