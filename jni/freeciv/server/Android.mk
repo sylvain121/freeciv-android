@@ -50,7 +50,8 @@ LOCAL_CFLAGS :=	-I$(LOCAL_PATH)/../ai \
                 -DHAVE_GETTIMEOFDAY \
                 -DHAVE_LIBZ
                 								
-
+APP_CFLAGS += -Wno-error=format-security
+LOCAL_DISABLE_FORMAT_STRING_CHECKS := true
 LOCAL_STATIC_LIBRARIES := lua tolua ai common utility
 
 LOCAL_LDLIBS := -lz -llog

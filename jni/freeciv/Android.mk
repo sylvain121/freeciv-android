@@ -9,4 +9,6 @@
 #   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #   GNU General Public License for more details.
 
+LOCAL_DISABLE_FORMAT_STRING_CHECKS := true
+APP_CFLAGS += -Wno-error=format-security
 include $(call all-subdir-makefiles)

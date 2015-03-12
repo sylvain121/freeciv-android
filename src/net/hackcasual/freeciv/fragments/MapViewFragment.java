@@ -191,7 +191,6 @@ public class MapViewFragment extends NativeAwareFragment {
                 unitMenu = true;
                 //TODO replace by unit action menu
                 unitMenu = false;
-
             }
 
         });

@@ -1,4 +1,4 @@
-package java.freeciv.advance;
+package net.hackcasual.freeciv.advance;
 
 import junit.framework.TestCase;
 import net.hackcasual.freeciv.advance.TechTree;
@@ -44,6 +44,8 @@ public class TechTreeTest extends TestCase {
      */
 
     Advance [] techTree = { iron, legion, pottery, well, car, movingCitern };
+
+
     /**
      * tech tree parser instance
      */

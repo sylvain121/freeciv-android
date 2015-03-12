@@ -1,4 +1,4 @@
-package java.freeciv.views;
+package net.hackcasual.freeciv.views;
 
 import junit.framework.TestCase;
 
