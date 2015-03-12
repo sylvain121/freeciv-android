@@ -5,22 +5,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
 import android.widget.ListView;
 import net.hackcasual.freeciv.Civ;
-import net.hackcasual.freeciv.NativeHarness;
 import net.hackcasual.freeciv.R;
 import net.hackcasual.freeciv.game.adapter.ResearchListAdapter;
 import net.hackcasual.freeciv.models.Advance;
-import net.hackcasual.freeciv.models.AdvanceExpense;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class ResearchFragment extends Fragment {
-    Set<FrameLayout> checked;
-    Map<Integer, FrameLayout> layoutMap;
+
     private List<Advance> advanceList;
 
     public ResearchFragment(){}

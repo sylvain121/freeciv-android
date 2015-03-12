@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import net.hackcasual.freeciv.fragments.MapViewFragment;
 import net.hackcasual.freeciv.R;
+import net.hackcasual.freeciv.fragments.NationFragment;
 import net.hackcasual.freeciv.fragments.ResearchFragment;
 import net.hackcasual.freeciv.models.NavDrawerItem;
 import net.hackcasual.freeciv.game.adapter.NavDrawerListAdapter;
@@ -73,6 +74,9 @@ public class MainGameActivity extends Activity {
         // science research
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, 0), true, "22"));
         fragmentsManager.addElement(new ResearchFragment());
+        //Nation information
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(0, 0)));
+        fragmentsManager.addElement(new NationFragment());
         //message
 
 		

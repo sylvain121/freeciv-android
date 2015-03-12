@@ -128,8 +128,8 @@ public class MapViewFragment extends NativeAwareFragment {
                 screenWidth = image.getMeasuredWidth();
                 screenWidthOffset = activityWidth - screenWidth;
                 screenHeightOffset = activityHeight - screenHeight;
-                NativeHarness.init(screenWidth, screenHeight);
-                mapView = Bitmap.createBitmap(screenWidth, screenHeight, Bitmap.Config.RGB_565);
+                NativeHarness.init(screenWidth/2, screenHeight/2);
+                mapView = Bitmap.createBitmap(screenWidth/2, screenHeight/2, Bitmap.Config.RGB_565);
                 image.getViewTreeObserver().removeOnPreDrawListener(this);
                 return true;
             }
