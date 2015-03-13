@@ -3,5 +3,35 @@
                 android:layout_height="match_parent">
 <ImageView android:id="@+id/map_view" android:layout_height="match_parent"
            android:layout_width="match_parent"></ImageView>
+    <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_centerHorizontal="true"
+            android:background="@android:color/transparent">
+        <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="bottom|center_horizontal"
+                android:paddingBottom="20dip"
+                android:background="@android:color/transparent">
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/unitCommands"
+                    android:background="@android:color/transparent">
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+    <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" android:background="@android:color/transparent"
+            android:gravity="bottom|right">
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="End Turn"
+                android:id="@+id/end_turn"/>
+    </RelativeLayout>
 </RelativeLayout>
 

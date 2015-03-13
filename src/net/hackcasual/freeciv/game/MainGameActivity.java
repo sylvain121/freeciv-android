@@ -216,35 +216,4 @@ public class MainGameActivity extends Activity {
 		// Pass any configuration change to the drawer toggls
 		mDrawerToggle.onConfigurationChanged(newConfig);
 	}
-
-    /**
-     * @method get all touch event for this activity
-     * only use to catch touch event on mapview
-     * @param event
-     * @return
-     */
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent event) {
-        super.dispatchTouchEvent(event);
-//        //TODO Zoom not working
-//        switch(event.getAction()){
-//            case MotionEvent.ACTION_POINTER_1_DOWN:
-//                zoomStartX = event.getX();
-//                zoomStartY = event.getY();
-//                zoomStart = true;
-//                ((MapViewFragment) fragmentsManager.elementAt(0)).setZoomLong(zoomStartX, zoomStartY, event.getX(), event.getY());
-//                break;
-//            case MotionEvent.ACTION_POINTER_1_UP:
-//                zoomStart = false;
-//        }
-//        if(event.getAction() == MotionEvent.ACTION_MOVE && zoomStart){
-//            ((MapViewFragment) fragmentsManager.elementAt(0)).doZoom(zoomStartX, zoomStartY, event.getX(), event.getY());
-//        }
-
-        if(currentFragment == fragmentsManager.elementAt(0)){
-            //Log.d("MainActivity.java", "new touch event : "+event.toString());
-            ((MapViewFragment) fragmentsManager.elementAt(0)).setTouchQueue(event);
-        }
-        return false;
-    }
 }

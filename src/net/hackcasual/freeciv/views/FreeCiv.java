@@ -210,7 +210,7 @@ public class FreeCiv extends NativeAwareFragment {
 
 	public void updateMapview(final ByteBuffer image, final Semaphore renderLock) {
 
-		/*if (this.isPaused) {
+		if (this.isPaused) {
 			renderLock.release();
 			return;
 		}

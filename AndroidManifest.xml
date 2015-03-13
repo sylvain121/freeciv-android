@@ -25,14 +25,13 @@
     <activity android:theme="@android:style/Theme.Light" android:name=".game.CityDialog"></activity>
 
 <activity android:name=".views.ImprovementView" android:exported="true"></activity>
-<activity android:name=".game.MainGameActivity" android:exported="true"></activity>
+<activity android:name=".game.MainGameActivity" android:exported="true" android:screenOrientation="landscape"></activity>
 <activity android:name=".views.ResearchView" android:exported="true"></activity>
-<activity android:name=".views.PlayerView" android:exported="true"></activity>
 <activity android:name=".views.CityProductionView" android:exported="true"></activity>
 <activity android:theme="@android:style/Theme.Light" android:name=".views.MainMenu" android:exported="true">
 </activity>
 <activity android:theme="@android:style/Theme.Light" android:name=".views.LoadGame" android:exported="true"></activity>
-<activity android:name=".StartupSplash" android:theme="@style/civ_splash" android:icon="@drawable/freeciv" android:exported="true">
+<activity android:name=".StartupSplash" android:theme="@style/civ_splash" android:icon="@drawable/freeciv" android:exported="true" android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

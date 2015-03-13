@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.FloatMath;
 import android.util.Log;
@@ -44,15 +45,20 @@ public class MapViewFragment extends NativeAwareFragment {
     private int activityHeight;
     private int screenWidthOffset;
     private int screenHeightOffset;
+    private LinearLayout unitCommandsView;
+    private int iconSize;
+    private Button endTurn;
 
 
     public MapViewFragment(){}
-	
+
+
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
  
-        View rootView = inflater.inflate(R.layout.mapview, container, false);
+        final View rootView = inflater.inflate(R.layout.mapview, container, false);
+        unitCommandsView = (LinearLayout) rootView.findViewById(R.id.unitCommands);
         Log.d("Freeciv.java", "start mapview fragment");
         nh = ((Civ)(this.getActivity().getApplication())).getNativeHarness();
         nh.getDialogManager().bindActivity(this.getActivity());
@@ -60,8 +66,23 @@ public class MapViewFragment extends NativeAwareFragment {
         Display display = getActivity().getWindowManager().getDefaultDisplay();
         activityWidth = display.getWidth();
         activityHeight = display.getHeight();
+        iconSize = activityHeight /10;
 
+        endTurn = (Button) rootView.findViewById(R.id.end_turn);
+        endTurn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                nh.sendCommand(100);
+            }
+        });
 
+        rootView.setOnTouchListener(new View.OnTouchListener(){
+            public boolean onTouch(View v, MotionEvent event){
+                Log.d("MapViewFragment", "touched");
+                setTouchQueue(event);
+                return true;
+            }
+        });
 
         //((ImageView)getActivity().findViewById(R.id.map_view)).setImageBitmap(mapView); view not init at this time
 
@@ -89,7 +110,7 @@ public class MapViewFragment extends NativeAwareFragment {
                     } catch (InterruptedException e) {
                         //Nothing
                     }
-                    int unitCount = NativeHarness.touchEvent((int)toProcess.getX() - screenWidthOffset, (int)toProcess.getY() - screenHeightOffset, toProcess.getAction());
+                    int unitCount = NativeHarness.touchEvent(((int)toProcess.getX() - screenWidthOffset)/2, ((int)toProcess.getY() - screenHeightOffset)/2, toProcess.getAction());
                     if (unitCount > 0) {
                         if (unitCount == 1) {
                             me.getActivity().runOnUiThread(new Runnable() {
@@ -153,15 +174,34 @@ public class MapViewFragment extends NativeAwareFragment {
     }
 
     public boolean setTouchQueue(MotionEvent event) {
-        Log.d("FreeCiv.java", "new touch event : "+event.toString());
+        Log.d("MapViewFragment", "new touch event : "+event.toString());
         touchQueue.add(event);
         return false;
     }
 
     public void showUnitMenu() {
-        Log.d("FreeCiv.java", "try to open unit menu");
+        Log.d("MapViewFragment", "try to open unit menu");
         unitMenu = true;
-        //TODO show unit menu
+        unitCommandsView.removeAllViews();
+        List<NativeHarness.AvailableCommand> unitCommandes = nh.getAvailableCommandsForUnit();
+        for(final NativeHarness.AvailableCommand command : unitCommandes) {
+            ImageView im = new ImageView(getActivity().getApplicationContext());
+            Drawable res = getResources().getDrawable(getResources().getIdentifier("drawable/order_"+command.toString().toLowerCase(), null,
+                    getActivity().getApplicationContext().getPackageName()));
+            im.setImageDrawable(res);
+            FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(iconSize, iconSize);
+            layoutParams.setMargins(5, 5, 5, 5);
+            im.setLayoutParams(layoutParams);
+            im.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    nh.sendCommand(command.ordinal());
+                    return true;
+                }
+            });
+            unitCommandsView.addView(im);
+
+        }
         unitMenu = false;
     }
 
@@ -311,7 +351,7 @@ public class MapViewFragment extends NativeAwareFragment {
         });
     }
 
-    /*public boolean onPrepareOptionsMenu (Menu menu) {
+/**    public boolean onPrepareOptionsMenu (Menu menu) {
         menu.clear();
         currentOptions = nh.getAvailableCommandsForUnit();
         Log.d("FreeCiv.java", "get unit option : "+currentOptions);
@@ -357,7 +397,7 @@ public class MapViewFragment extends NativeAwareFragment {
             menu.add(0, 105, 0, "Cancel");
         }
         return true;
-    }*/
+    } */
 
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -542,4 +582,5 @@ public class MapViewFragment extends NativeAwareFragment {
         Log.d("MapViewFragment", "setZoom");
         oldZoomLong = getZoomWidth(zoomStartX, zoomStartY, x, y);
     }
+
 }
