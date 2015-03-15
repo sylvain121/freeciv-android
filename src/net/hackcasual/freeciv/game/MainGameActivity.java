@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import net.hackcasual.freeciv.fragments.MapViewFragment;
 import net.hackcasual.freeciv.R;
+import net.hackcasual.freeciv.fragments.MessageFragment;
 import net.hackcasual.freeciv.fragments.NationFragment;
 import net.hackcasual.freeciv.fragments.ResearchFragment;
 import net.hackcasual.freeciv.models.NavDrawerItem;
@@ -78,7 +79,8 @@ public class MainGameActivity extends Activity {
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(0, 0)));
         fragmentsManager.addElement(new NationFragment());
         //message
-
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(0, 0)));
+        fragmentsManager.addElement(new MessageFragment());
 		
 
 		// Recycle the typed array

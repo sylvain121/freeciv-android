@@ -42,6 +42,7 @@
         <item >Map</item>
         <item>Research</item>
         <item>Nation</item>
+        <item>messages</item>
     </string-array>
 
     <!-- Nav Drawer List Item Icons -->

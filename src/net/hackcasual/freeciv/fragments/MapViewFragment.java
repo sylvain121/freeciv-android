@@ -192,11 +192,10 @@ public class MapViewFragment extends NativeAwareFragment {
             FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(iconSize, iconSize);
             layoutParams.setMargins(5, 5, 5, 5);
             im.setLayoutParams(layoutParams);
-            im.setOnTouchListener(new View.OnTouchListener() {
+            im.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public boolean onTouch(View v, MotionEvent event) {
+                public void onClick(View v) {
                     nh.sendCommand(command.ordinal());
-                    return true;
                 }
             });
             unitCommandsView.addView(im);

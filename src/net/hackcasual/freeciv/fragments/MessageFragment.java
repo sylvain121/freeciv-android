@@ -20,7 +20,7 @@ public class MessageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.researchlist, container, false);
+        View rootView = inflater.inflate(R.layout.messages, container, false);
         return rootView;
     }
 }
